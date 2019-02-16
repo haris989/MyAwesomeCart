@@ -70,8 +70,9 @@
             <img src='/media/{{i.image}}' class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{i.product_name}}</h5>
-              <p class="card-text">{{i.desc}}</p>
+              <p class="card-text">{{i.desc|slice:"0:53"}}...</p>
               <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
+              <a href="/shop/products/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart">QuickView</button></a>
             </div>
           </div>
         </div>
