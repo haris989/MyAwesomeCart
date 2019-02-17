@@ -1,7 +1,11 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product, Contact
 from math import ceil
+# import the logging library
+import logging
 
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 # Create your views here.
 from django.http import HttpResponse
 
@@ -30,6 +34,13 @@ def about(request):
     return render(request, 'shop/about.html')
 
 def contact(request):
+    if request.method=="POST":
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        phone = request.POST.get('phone', '')
+        desc = request.POST.get('desc', '')
+        contact = Contact(name=name, email=email, phone=phone, desc=desc)
+        contact.save()
     return render(request, 'shop/contact.html')
 
 def tracker(request):
