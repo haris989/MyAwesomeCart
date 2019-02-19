@@ -127,12 +127,14 @@ function updatePopover(cart)
 
 }
 function updateCart(cart) {
+    var sum = 0;
     for (var item in cart) {
+        sum = sum + cart[item];
         document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
 
     }
     localStorage.setItem('cart', JSON.stringify(cart));
-    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+    document.getElementById('cart').innerHTML = sum;
     console.log(cart);
     updatePopover(cart);
 }
