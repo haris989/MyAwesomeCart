@@ -89,12 +89,12 @@ if (localStorage.getItem('cart') == null) {
     var cart = {};
 } else {
     cart = JSON.parse(localStorage.getItem('cart'));
-    document.getElementById('cart').innerHTML = Object.keys(cart).length;
     updateCart(cart);
 }
 
 // If the add to cart button is clicked, add/increment the item
-$('.cart').click(function() {
+//$('.cart').click(function() {
+    $('.divpr').on('click', 'button.cart', function(){
     var idstr = this.id.toString();
     if (cart[idstr] != undefined) {
         cart[idstr] = cart[idstr] + 1;
@@ -102,30 +102,44 @@ $('.cart').click(function() {
         cart[idstr] = 1;
     }
     updateCart(cart);
-    
+
 });
 
 //Add Popover to cart
 $('#popcart').popover();
 updatePopover(cart);
-function updatePopover(cart)
-{
+
+function updatePopover(cart) {
     console.log('We are inside updatePopover');
     var popStr = "";
     popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
     var i = 1;
-    for (var item in cart){
+    for (var item in cart) {
         popStr = popStr + "<b>" + i + "</b>. ";
         popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item] + '<br>';
-        i = i+1;
+        i = i + 1;
 
     }
-    popStr = popStr + "</div>" 
+
+    popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
     console.log(popStr);
     document.getElementById('popcart').setAttribute('data-content', popStr);
     $('#popcart').popover('show');
 
 }
+
+function clearCart() {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    for (var item in cart) {
+        document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cart">Add To Cart</button>'
+    }
+    localStorage.clear();
+    cart = {};
+    updateCart(cart);
+
+
+}
+
 function updateCart(cart) {
     var sum = 0;
     for (var item in cart) {
