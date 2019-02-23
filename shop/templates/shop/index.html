@@ -56,6 +56,7 @@ padding-right: 0;
                             <div class="card-body">
                                 <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
                                 <p class="card-text">{{i.desc|slice:"0:53"}}...</p>
+                                <h6 class="card-title" >Price: <span id="pricepr{{i.id}}">{{i.price}}</span></h6>
                                 <span id="divpr{{i.id}}" class="divpr">
                                     <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
                                 </span>
@@ -101,7 +102,8 @@ if (localStorage.getItem('cart') == null) {
     } else {
         qty = 1;
         name = document.getElementById('name'+idstr).innerHTML;
-        cart[idstr] = [qty, name];
+        price = document.getElementById('price'+idstr).innerHTML;
+        cart[idstr] = [qty, name, parseInt(price)];
 
     }
     updateCart(cart);
