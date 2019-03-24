@@ -4,7 +4,10 @@ from .models import Blogpost
 from django.http import HttpResponse
 
 def index(request):
-    return render(request, 'blog/index.html')
+    myposts = Blogpost.objects.all()
+    print(myposts)
+    return render(request, 'blog/index.html',
+                  {'myposts': myposts})
 
 def blogpost(request, id):
     post = Blogpost.objects.filter(post_id = id)[0]
