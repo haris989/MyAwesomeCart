@@ -17,18 +17,7 @@
                 <button type="submit" class="btn btn-primary">Track Order</button>
             </div>
     </div>
-    <div class="col my-4">
-        <h2>Your Order Status</h2>
-        <div class="my-4">
-            <ul class="list-group" id="items">
-                Enter your order Id and Email and click Track Order to find details about your order!
-            </ul>
-        </div>
-        <h2>Your Order Details</h2>
-        <div class="my-4">
-            <ul class="list-group" id="citems">
-            </ul>
-        </div>
+    <div class="col my-4" id="mydiv">
     </div>
 </div>
 {% endblock %}
@@ -36,7 +25,7 @@
 <script>
 $('#trackerForm').submit(function(event) {
 
-    $('#items').empty();
+    $('#mydiv').empty();
     var formData = {
         'orderId': $('input[name=orderId]').val(),
         'email': $('input[name=email]').val(),
@@ -51,12 +40,24 @@ $('#trackerForm').submit(function(event) {
         })
 
         .done(function(data) {
-            $('#citems').empty();
-            console.log(data)
             data = JSON.parse(data);
+
+            mydiv = `<div class="my-4">
+                        <h2>Your Order Status</h2>
+                        <ul class="list-group" id="items">
+                        </ul>
+                    </div>`;
+            $('#mydiv').append(mydiv);
 
             if (data['status'] == 'success') {
                 updates = data['updates'];
+
+                mydiv = `<div class="my-4">
+                            <h2>Your Order Details</h2>
+                            <ul class="list-group" id="citems">
+                            </ul>
+                        </div>`;
+                $('#mydiv').append(mydiv);
 
                 for (i = 0; i < updates.length; i++) {
                     let text = updates[i]['text'];
@@ -82,13 +83,9 @@ $('#trackerForm').submit(function(event) {
                     $('#citems').append(mystr);
                 }
 
-
             } else {
-                mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                    Sorry, We are not able to fetch this order id and email. Make sure to type correct order Id and email</li>`
+                mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">Sorry, We are not able to fetch this order id and email. Make sure to type correct order Id and email</li>`
                 $('#items').append(mystr);
-                $('#citems').append(mystr);
-
 
             }
 

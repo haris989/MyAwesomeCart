@@ -60,7 +60,8 @@ padding-right: 0;
                         <div class="card align-items-center" style="width: 18rem;">
                             <img src='/media/{{i.image}}' class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
+                                <input type="hidden" id="namepr{{i.id}}" value="{{i.product_name}}">
+                                <h5 class="card-title">{{i.product_name|slice:"0:20"}}...</h5>
                                 <p class="card-text">{{i.desc|slice:"0:53"}}...</p>
                                 <h6 class="card-title" >Price: <span id="pricepr{{i.id}}">{{i.price}}</span></h6>
                                 <span id="divpr{{i.id}}" class="divpr">
@@ -107,7 +108,7 @@ if (localStorage.getItem('cart') == null) {
         qty = cart[idstr][0] + 1;
     } else {
         qty = 1;
-        name = document.getElementById('name'+idstr).innerHTML;
+        name = document.getElementById('name'+idstr).value;
         price = document.getElementById('price'+idstr).innerHTML;
         cart[idstr] = [qty, name, parseInt(price)];
 
@@ -127,7 +128,7 @@ function updatePopover(cart) {
     var i = 1;
     for (var item in cart) {
         popStr = popStr + "<b>" + i + "</b>. ";
-        popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
+        popStr = popStr + document.getElementById('name' + item).value.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
         i = i + 1;
 
     }
