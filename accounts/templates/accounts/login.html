@@ -1,0 +1,41 @@
+{% extends 'shop/basic.html' %}
+{% block title%} Login Here{% endblock %}
+{% block body %}
+<center>
+    <div class="container mt-3">
+        <div class="col-md-12 col-lg-6 login-center">
+
+            <div class="login-header">
+                <h3>Login</h3>
+            </div>
+            <form action="/accounts/login" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="text-left my-2">
+                        <label for="username">Username</label>
+                        <input class="form-control" id="username" name='username' placeholder="Enter Your Username" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="text-left my-2">
+                            <label for="password">Password</label>
+                            <input class="form-control" id="password" name='password' placeholder="Enter Your Password"
+                                   type="password">
+                        </div>
+                        <div class="text-right">
+                            <a class="forgot-link" href="forgot-password.html">Forgot Password ?</a>
+                        </div>
+                        <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Login</button>
+                        <div class="login-or">
+                            <span class="or-line"></span>
+                            <span class="span-or">or</span>
+                        </div>
+
+                        <div class="text-center dont-have">Don’t have an account? <a href="/accounts/signup">Register</a>
+                        </div>
+                    </div>
+                  </form>
+</center>
+</div>
+</div>
+{% endblock %}
