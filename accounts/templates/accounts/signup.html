@@ -1,0 +1,66 @@
+{% extends 'shop/basic.html' %}
+{% block title%} Register Here{% endblock %}
+{% block body %}
+
+<center>
+<div class="container mt-3 " xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+        <div class="col-md-12 col-lg-6 login-right">
+
+            <div class="login-header">
+
+                <h3 class="jumbotron-heading"><span id="typed1">New Customer! Register Here</span></h3>
+            </div>
+            <!-- Regis ter Form -->
+            <div class="form-group mt-3">
+                <form action="/accounts/signup" method="post">
+                    {% csrf_token %}
+                    <div class="text-left my-2">
+                        <label for="username">Username</label>
+                        <input class="form-control" id="username" name="username" placeholder="Choose a unique Username" type="text">
+                    </div>
+                    <div class="form-group">
+                        <div class="text-left my-2">
+                            <label for="first_name">First Name</label>
+                            <input class="form-control" id="first_name" name="first_name" placeholder="Enter Your First Name"
+                                   type="text">
+                        </div>
+                          <div class="form-group">
+                        <div class="text-left my-2">
+                            <label for="last_name">Last Name</label>
+                            <input class="form-control" id="last_name" name="last_name" placeholder="Enter Your Last Name"
+                                   type="text">
+                        </div>
+                              <div class="form-group">
+                        <div class="text-left my-2">
+                            <label for="email">Email</label>
+                            <input class="form-control" id="email" name="email" placeholder="Enter Your Email Address"
+                                   type="text">
+                             </div>
+
+                        <div class="form-group">
+                            <div class="text-left my-2">
+                                <label for="password1">Choose a Password</label>
+                                <input class="form-control" id="password1" name="password1"
+                                       placeholder="Enter Your Password"
+                                       type="password">
+                             </div>
+                             <form class="form-group">
+                                 <div class="text-left my-2">
+                                <label for="password2">Confirm Your Password</label>
+                                <input class="form-control" id="password2" name="password2"
+                                       placeholder="Enter Your Password Again"
+                                       type="password">
+                            </div>
+                                <div class="text-right">
+                                    <a class="forgot-link" href="/accounts/login">Already have an account?</a>
+                                </div>
+                                 <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Signup</button>
+                                </form>
+
+
+                        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}

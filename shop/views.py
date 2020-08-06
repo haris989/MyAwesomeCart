@@ -1,12 +1,19 @@
+from allauth.app_settings import LOGIN_REDIRECT_URL
 from django.shortcuts import render
+from django.shortcuts import HttpResponse, redirect
 from .models import Product, Contact, Orders, OrderUpdate
 from math import ceil
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.db import transaction
 from PayTm import Checksum
 # Create your views here.
 from django.http import HttpResponse
-MERCHANT_KEY = 'Your-Merchant-Key-Here'
+
+MERCHANT_KEY = '_Xs7L#&PNUl0d&KP'
 
 def index(request):
     allProds = []
@@ -90,7 +97,7 @@ def productView(request, myid):
     product = Product.objects.filter(id=myid)
     return render(request, 'shop/prodView.html', {'product':product[0]})
 
-
+@login_required(login_url=LOGIN_REDIRECT_URL)
 def checkout(request):
     if request.method=="POST":
         items_json = request.POST.get('itemsJson', '')
@@ -113,7 +120,7 @@ def checkout(request):
         # Request paytm to transfer the amount to your account after payment by user
         param_dict = {
 
-                'MID': 'Your-Merchant-Id-Here',
+                'MID': 'pyDhYb76133869472945',
                 'ORDER_ID': str(order.order_id),
                 'TXN_AMOUNT': str(amount),
                 'CUST_ID': email,
@@ -127,6 +134,8 @@ def checkout(request):
         return render(request, 'shop/paytm.html', {'param_dict': param_dict})
 
     return render(request, 'shop/checkout.html')
+
+
 
 
 @csrf_exempt
