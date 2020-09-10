@@ -1,0 +1,159 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %} Checkout - My Awesome Cart {% endblock %}
+
+{% block body %}
+<div class="container">
+ <div class="col my-4">
+  <h4>Step 1 - My Awesome Cart Express Checkout - Review Your Cart Items </h4>
+  <div class="my-4">
+   <ul class="list-group" id="items">
+   </ul>
+   <nav aria-label="breadcrumb">
+  <ol class="breadcrumb mt-3">
+   <li class="breadcrumb-item active" aria-current="page">Cart Amount:- Rs.<b><span id="cartPrice"></span></b></li>
+   <li class="breadcrumb-item active" aria-current="page">Delivery Charges:- Rs.<b><span id="deliveryPrice"></span></b></li>
+   </ol>
+</nav>
+   <nav aria-label="breadcrumb">
+   <ol class="breadcrumb mt-3">
+   <li class="breadcrumb-item active" aria-current="page">Total Amount:- Rs.<b><span id="totalPrice"></span></b></li>
+   </ol>
+   </nav>
+
+
+  </div>
+ </div>
+ <div class="col my-4">
+  <h4>Step 2 - Enter Address and Other Details:</h4>
+  <form method="post" action="/shop/checkout/">{% csrf_token %}
+   <input type="hidden" name="itemsJson" id="itemsJson">
+   <div class="form-row">
+    <div class="form-group col-md-6">
+     <label for="inputname">Name</label>
+     <input type="name" class="form-control" id="name" name="name" placeholder="Full Name">
+    </div>
+    <div class="form-group col-md-6">
+     <label for="inputEmail4">Email</label>
+     <input type="email" class="form-control" id="email" name="email" placeholder="abc@xyz.com">
+    </div>
+   </div>
+   <div class="form-group">
+    <label for="inputAddress">Address</label>
+    <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St">
+   </div>
+   <div class="form-group">
+    <label for="inputAddress2">Address Line 2</label>
+    <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor">
+   </div>
+   <div class="form-row">
+    <div class="form-group col-md-6">
+     <label for="inputCity">City</label>
+     <input type="text" class="form-control" id="city" name="city">
+    </div>
+    <div class="form-group col-md-4">
+     <label for="inputState">State</label>
+     <select id="state" name="state" class="form-control">
+      <option selected>Choose...</option>
+      <option><li> Andhra Pradesh </li></option>
+      <option><li> Arunachal Pradesh </li></option>
+      <option><li> Assam </li></option>
+      <option><li> Bihar </li></option>
+      <option><li> Chhatisgarh </li></option>
+      <option><li> Goa </li></option>
+      <option><li> Gujrat </li></option>
+      <option><li> Haryana </li></option>
+      <option><li> Himachal Pradesh </li></option>
+      <option><li> Jharkhand </li></option>
+      <option><li> Karnataka </li></option>
+      <option><li> Kerala </li></option>
+      <option><li> Madhya Pradesh </li></option>
+      <option><li> Maharashtra </li></option>
+      <option><li> Manipur </li></option>
+      <option><li> Meghalya </li></option>
+      <option><li> Mizoram </li></option>
+      <option><li> Nagaland </li></option>
+      <option><li> Odisha </li></option>
+      <option><li> Punjab </li></option>
+      <option><li> Rajasthan </li></option>
+      <option><li>Odisha</li></option>
+      <option><li>Punjab </li></option>
+      <option><li>Rajasthan </li></option>
+      <option><li>Sikkim </li></option>
+      <option><li>Tamil Nadu </li></option>
+      <option><li>Telangana </li></option>
+      <option><li>Tripura </li></option>
+      <option><li>Uttar Pradesh </li></option>
+      <option><li> Uttarakhand </li></option>
+      <option><li> West Bengal </li></option>
+      <option><li> Andaman and Nicobar </li></option>
+      <option><li>Chandigarh</li></option>
+      <option><li>Daman and Diu</li></option>
+      <option><li>Dadar and Nagar Haveli</li></option>
+      <option><li>Delhi</li></option>
+      <option><li>Jammu and Kashmir</li></option>
+      <option><li>Ladakh</li></option>
+      <option><li> Lakshadweep</li></option>
+      <option><li> Puducherry</li></option>
+     </select>
+    </div>
+    <div class="form-group col-md-2">
+     <label for="inputZip">Zip</label>
+     <input type="text" class="form-control" id="zip_code" name="zip_code">
+    </div>
+   </div>
+   <div class="form-group">
+    <label for="inputphone">Phone Number</label>
+    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+91">
+   </div>
+   <button type="submit" class="btn btn-primary">Place Order</button>
+  </form>
+ </div>
+</div>
+{% endblock %}
+
+{% block js%}
+<script>
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+} else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+}
+    console.log(cart);
+    var sum = 0;
+    var totalPrice = 0;
+    var cartPrice = 0;
+    var deliveryPrice = 149;
+    if ($.isEmptyObject(cart)){
+<!--  If cart is empty  -->
+mystr = `<h6>Your Cart is Empty !!!</h6>`
+    $('#items').append(mystr);
+    var deliveryPrice = 0;
+}
+else{
+for (item in cart){
+let name = cart[item][1];
+let qty = cart[item][0];
+let itemPrice = cart[item][2];
+sum = sum + qty;
+cartPrice = totalPrice + qty* itemPrice
+totalPrice = totalPrice + qty* itemPrice + deliveryPrice ;
+mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+     ${name}
+     <span class="badge badge-primary badge-pill">${qty}</span>
+    </li>`
+    $('#items').append(mystr);
+}
+}
+document.getElementById('cart').innerHTML = sum;
+document.getElementById('totalPrice').innerHTML = totalPrice;
+document.getElementById('cartPrice').innerHTML = cartPrice;
+document.getElementById('deliveryPrice').innerHTML = deliveryPrice;
+$('#itemsJson').val(JSON.stringify(cart));
+{% if thank %}
+alert('Thanks for ordering with us.Your order id is{{id}}.You can track it later.');
+localStorage.clear();
+document.location = "/shop";
+{% endif %}
+</script>
+{% endblock %}
