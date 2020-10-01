@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Product, Contact, Orders, OrderUpdate
+from django.contrib import messages
 from math import ceil
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -60,6 +61,7 @@ def contact(request):
         contact = Contact(name=name, email=email, phone=phone, desc=desc)
         contact.save()
         thank = True
+        messages.success(request, 'Thanks for reaching with us!')
     return render(request, 'shop/contact.html', {'thank': thank})
 
 
