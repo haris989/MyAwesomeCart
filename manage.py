@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import os
+# this will be give a contribution by the operating system
 import sys
+# it will be importing your local machine
 
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mac.settings')
