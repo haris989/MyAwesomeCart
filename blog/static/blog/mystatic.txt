@@ -1,1 +1,1 @@
-this is my static file in blog
+this is my static file in blog and this is awesome!!
