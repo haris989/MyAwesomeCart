@@ -106,5 +106,9 @@ localStorage.clear();
 document.location = "/shop";
 {% endif %}
 $('#amount').val($('#totalPrice').html())
+{% if check %}
+alert('Please check whether the cart has items or whether the email is written')
+document.location = "/shop/checkout/";
+{% endif %}
 </script>
 {% endblock %}
