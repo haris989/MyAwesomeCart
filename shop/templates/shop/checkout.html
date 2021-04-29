@@ -106,5 +106,10 @@ localStorage.clear();
 document.location = "/shop";
 {% endif %}
 $('#amount').val($('#totalPrice').html())
+ 
+//to prevent from confirm for resubmission to send same data again and again
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+}
 </script>
 {% endblock %}
